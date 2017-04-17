@@ -4,6 +4,9 @@
 [Tt]emp/
 [Oo]bj/
 [Bb]uild
+Library/ShaderCache
+Library/metadata
+Library/ScriptAssemblies
 sysinfo.txt
 *.stackdump
  
