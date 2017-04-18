@@ -233,8 +233,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4866898447313996}
   - component: {fileID: 65156533156825312}
+  - component: {fileID: 114786473373779184}
   m_Layer: 0
-  m_Name: Spider 1
+  m_Name: Spider-fancy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1804,6 +1805,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114786473373779184
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1554284612083926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b46eb8030be83d14db56da4a5a032cb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxVel: 6
+  jumpVel: 3
+  easing: 0.5
+  epsilon: 0.2
 --- !u!135 &135017606382153666
 SphereCollider:
   m_ObjectHideFlags: 1
