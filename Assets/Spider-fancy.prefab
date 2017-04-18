@@ -1833,7 +1833,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVel: 6
-  jumpVel: 3
+  jumpVel: 7
   easing: 0.5
   epsilon: 0.2
 --- !u!135 &135098470616958118
