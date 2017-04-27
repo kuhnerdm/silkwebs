@@ -463,7 +463,7 @@ Prefab:
     - target: {fileID: 54852768058595236, guid: 8ff411f392d293f4aab3a5b24fd83ffc,
         type: 2}
       propertyPath: m_Constraints
-      value: 114
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 4210875347674202, guid: 8ff411f392d293f4aab3a5b24fd83ffc, type: 2}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -961,7 +961,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 98
+  m_Constraints: 56
   m_CollisionDetection: 0
 --- !u!1 &1840117319
 GameObject:
@@ -1062,5 +1062,5 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 98
+  m_Constraints: 56
   m_CollisionDetection: 0
