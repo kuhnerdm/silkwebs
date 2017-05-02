@@ -24,11 +24,9 @@ public class AttachHook : MonoBehaviour {
             mouseScreenPoint.z = -Camera.main.transform.position.z;
             Vector2 mouseWorldPoint = Camera.main.ScreenToWorldPoint(mouseScreenPoint);
 
-            // Instatiate hook on player's position.
-            curHook = Instantiate(hookPrefab, transform.position, 
+            // Instatiate hook at destination.
+            curHook = Instantiate(hookPrefab, mouseWorldPoint, 
                                   Quaternion.identity) as GameObject;
-
-            curHook.GetComponent<Silk>().destination = mouseWorldPoint;
         }
     }
 }
