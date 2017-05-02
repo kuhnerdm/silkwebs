@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class SimpleSpiderMovement : MonoBehaviour {
 
+    // True indicates spider is facing right. False indicates spider is facing left.
+    public bool facingRight;
+
     public float maxVel;
     public float jumpVel;
     public float easing;
@@ -49,7 +52,6 @@ public class SimpleSpiderMovement : MonoBehaviour {
             Vector2 newVel = new Vector2(Mathf.Lerp(oldVel.x, 0, easing), oldVel.y);
             GetComponent<Rigidbody2D>().velocity = newVel;
         }
-
     }
 
     bool isOnGround()
@@ -66,7 +68,6 @@ public class SimpleSpiderMovement : MonoBehaviour {
 
     bool objectToRight()
     {
-
         Vector2 toTopCorner = new Vector2(xExtent, yExtent);
         Vector2 toBottomCorner = new Vector2(xExtent, -yExtent * 0.4f);
 
