@@ -52,7 +52,7 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1583501438010704}
-  m_BodyType: 2
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -90,14 +90,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e51d60c508e7b749a6045cf58ff1fe6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destination: {x: 0, y: 0}
-  speed: 0.1
-  distance: 0.2
+  nodeSpacing: 0.2
   nodePrefab: {fileID: 1318693999719494, guid: 3aac4216ebf60d04aa58f5a81d1164fb, type: 2}
   player: {fileID: 0}
-  lastNode: {fileID: 0}
-  nodes: []
   lineRenderer: {fileID: 0}
+  nodes: []
+  connectedObject: {fileID: 0}
 --- !u!120 &120714177189782714
 LineRenderer:
   m_ObjectHideFlags: 1
