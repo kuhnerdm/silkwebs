@@ -19,6 +19,7 @@ public class SimpleSpiderMovement : MonoBehaviour {
 
     void Start()
     {
+        facingRight = true;
     }
 
     void FixedUpdate()
@@ -29,6 +30,7 @@ public class SimpleSpiderMovement : MonoBehaviour {
             Vector2 oldVel = GetComponent<Rigidbody2D>().velocity;
             Vector2 newVel = new Vector2(Mathf.Lerp(oldVel.x, maxVel, easing), oldVel.y);
             GetComponent<Rigidbody2D>().velocity = newVel;
+            facingRight = true;
         }
 
         //if (Input.GetKey(KeyCode.LeftArrow) && !objectToLeft() && !Input.GetKey(KeyCode.RightArrow))
@@ -37,6 +39,7 @@ public class SimpleSpiderMovement : MonoBehaviour {
             Vector2 oldVel = GetComponent<Rigidbody2D>().velocity;
             Vector2 newVel = new Vector2(Mathf.Lerp(oldVel.x, -maxVel, easing), oldVel.y);
             GetComponent<Rigidbody2D>().velocity = newVel;
+            facingRight = false;
         }
 
         if (Input.GetKey(KeyCode.Space) && Mathf.Abs(GetComponent<Rigidbody2D>().velocity.y) < epsilon && isOnGround())

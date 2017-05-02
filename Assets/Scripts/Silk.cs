@@ -14,8 +14,10 @@ public class Silk : MonoBehaviour {
     [HideInInspector] public LineRenderer lineRenderer; 
     [HideInInspector] public List<GameObject> nodes = new List<GameObject>();
 
-	// Use this for initialization
-	void Start () {
+    [HideInInspector] public GameObject connectedObject;  // This should be set when the Hook prefab is initialized.
+
+    // Use this for initialization
+    void Start () {
         lineRenderer = GetComponent<LineRenderer>();
         player = GameObject.FindGameObjectWithTag("Player");
 
