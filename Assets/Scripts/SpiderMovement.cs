@@ -18,11 +18,12 @@ public class SpiderMovement : MonoBehaviour {
 
 	private Transform[] hips;
 
-	private int pushableMask = ~(1 << 8);
+	private int allExceptSpiderAndRockMask = ~(3 << 8);
+	private int allExceptSpiderMask = ~(2 << 8);
 
 	void Start() {
-		Transform leftHips = transform.GetChild(0).GetChild(0);
-		Transform rightHips = transform.GetChild(0).GetChild(1);
+		Transform leftHips = transform.GetChild(0).GetChild(0).GetChild(0);
+		Transform rightHips = transform.GetChild(0).GetChild(0).GetChild(1);
 		hips = new Transform[8];
 		for(int i = 0; i < 4; i++) {
 			hips[i] = leftHips.GetChild(i).GetChild(0);
@@ -35,75 +36,75 @@ public class SpiderMovement : MonoBehaviour {
 
 	void FixedUpdate() {
 		if(Input.GetKey(KeyCode.RightArrow) && !objectToRight() && !Input.GetKey(KeyCode.LeftArrow)) { // just right
-			Vector3 oldVel = GetComponent<Rigidbody>().velocity;
-            Vector3 newVel = new Vector3(Mathf.Lerp(oldVel.x, maxVel, easing), oldVel.y, oldVel.z);
-			GetComponent<Rigidbody>().velocity = newVel;
+			Vector2 oldVel = GetComponent<Rigidbody2D>().velocity;
+			Vector2 newVel = new Vector2(Mathf.Lerp(oldVel.x, maxVel, easing), oldVel.y);
+			GetComponent<Rigidbody2D>().velocity = newVel;
 
-			Vector3 oldRot = this.transform.rotation.eulerAngles;
-			Vector3 newRot = new Vector3(oldRot.x, Mathf.Lerp(oldRot.y, 90f, easing), oldRot.z);
+			Vector2 oldRot = this.transform.rotation.eulerAngles;
+			Vector2 newRot = new Vector2(oldRot.x, Mathf.Lerp(oldRot.y, 0, easing));
 
 			this.transform.rotation = Quaternion.Euler(newRot);
 			rotateLegs();
 		}
 
 		if(Input.GetKey(KeyCode.LeftArrow) && !objectToLeft() && !Input.GetKey(KeyCode.RightArrow)) { // just left
-			Vector3 oldVel = GetComponent<Rigidbody>().velocity;
-            Vector3 newVel = new Vector3(Mathf.Lerp(oldVel.x, -maxVel, easing), oldVel.y, oldVel.z);
-            GetComponent<Rigidbody>().velocity = newVel;
+			Vector2 oldVel = GetComponent<Rigidbody2D>().velocity;
+			Vector2 newVel = new Vector2(Mathf.Lerp(oldVel.x, -maxVel, easing), oldVel.y);
+			GetComponent<Rigidbody2D>().velocity = newVel;
 
-			Vector3 oldRot = this.transform.rotation.eulerAngles;
-			Vector3 newRot = new Vector3(oldRot.x, Mathf.Lerp(oldRot.y, 270f, easing), oldRot.z);
+			Vector2 oldRot = this.transform.rotation.eulerAngles;
+			Vector2 newRot = new Vector2(oldRot.x, Mathf.Lerp(oldRot.y, 180f, easing));
 
 			this.transform.rotation = Quaternion.Euler(newRot);
 
 			rotateLegs();
 		}
 
-		if(Input.GetKey(KeyCode.Space) && Mathf.Abs(GetComponent<Rigidbody>().velocity.y) < epsilon && isOnGround()) { // space
-			Vector3 oldVel = GetComponent<Rigidbody>().velocity;
-			Vector3 newVel = new Vector3(oldVel.x, jumpVel, oldVel.z);
-			GetComponent<Rigidbody>().velocity = newVel;
+
+		if(Input.GetKey(KeyCode.Space) && Mathf.Abs(GetComponent<Rigidbody2D>().velocity.y) <= epsilon && isOnGround()) { // space
+			Vector2 oldVel = GetComponent<Rigidbody2D>().velocity;
+			Vector2 newVel = new Vector2(oldVel.x, jumpVel);
+			GetComponent<Rigidbody2D>().velocity = newVel;
 		}
 
 		if((Input.GetKey(KeyCode.RightArrow) && Input.GetKey(KeyCode.LeftArrow)) || (!Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))) { // either both or neither
-			Vector3 oldVel = GetComponent<Rigidbody>().velocity;
-			Vector3 newVel = new Vector3(Mathf.Lerp(oldVel.x, 0, easing), oldVel.y, oldVel.z);
-			GetComponent<Rigidbody>().velocity = newVel;
+			Vector2 oldVel = GetComponent<Rigidbody2D>().velocity;
+			Vector2 newVel = new Vector2(Mathf.Lerp(oldVel.x, 0, easing), oldVel.y);
+			GetComponent<Rigidbody2D>().velocity = newVel;
 		}
 
 	}
 
 	bool isOnGround() {
-		Vector3 toLeftCorner = new Vector3(-xExtent, - yExtent, 0f);
-		Vector3 toRightCorner = new Vector3(xExtent, -yExtent,  0f);
+		Vector2 pos = new Vector2(transform.position.x, transform.position.y);
+		Vector2 toLeftCorner = new Vector2(-xExtent * 0.9f, - yExtent);
+		Vector2 toRightCorner = new Vector2(xExtent * 0.9f, -yExtent);
 
-		bool down = Physics.Raycast(transform.position, Vector3.down, yExtent);
-		bool diagLeft = Physics.Raycast(transform.position, toLeftCorner, toLeftCorner.magnitude);
-		bool diagRight = Physics.Raycast(transform.position, toRightCorner, toRightCorner.magnitude);
-
+		bool down = Physics2D.Raycast(pos, Vector2.down, yExtent, allExceptSpiderAndRockMask);
+		bool diagLeft = Physics2D.Raycast(pos, toLeftCorner, toLeftCorner.magnitude, allExceptSpiderMask);
+		bool diagRight = Physics2D.Raycast(pos, toRightCorner, toRightCorner.magnitude, allExceptSpiderMask);
 		return down || diagLeft || diagRight;
 	}
 
 	bool objectToRight() {
+		Vector2 pos = new Vector2(transform.position.x, transform.position.y);
+		Vector2 toTopCorner = new Vector2(xExtent, yExtent);
+		Vector2 toBottomCorner = new Vector2(xExtent, -yExtent * 0.4f);
 
-		Vector3 toTopCorner = new Vector3(xExtent, yExtent, 0f);
-		Vector3 toBottomCorner = new Vector3(xExtent, -yExtent * 0.4f, 0f);
-
-		bool right = Physics.Raycast(transform.position, Vector3.right, xExtent * 1.2f, pushableMask);
-		bool diagUp = Physics.Raycast(transform.position, toTopCorner, toTopCorner.magnitude * 1.2f, pushableMask);
-		bool diagDown = Physics.Raycast(transform.position, toBottomCorner, toBottomCorner.magnitude, pushableMask);
-
-        return right || diagUp || diagDown;
+		bool right = Physics2D.Raycast(pos, Vector2.right, xExtent * 1.5f, allExceptSpiderAndRockMask);
+		bool diagUp = Physics2D.Raycast(pos, toTopCorner, toTopCorner.magnitude, allExceptSpiderAndRockMask);
+		bool diagDown = Physics2D.Raycast(pos, toBottomCorner, toBottomCorner.magnitude, allExceptSpiderAndRockMask);
+		return right || diagUp || diagDown;
 	}
 
 	bool objectToLeft() {
-        Vector3 toTopCorner = new Vector3(-xExtent, yExtent, 0f);
-        Vector3 toBottomCorner = new Vector3(-xExtent, -yExtent * 0.4f, 0f);
+		Vector2 pos = new Vector2(transform.position.x, transform.position.y);
+		Vector2 toTopCorner = new Vector2(-xExtent, yExtent);
+		Vector2 toBottomCorner = new Vector2(-xExtent, -yExtent * 0.4f);
 
-		bool left = Physics.Raycast(transform.position, Vector3.left, xExtent * 1.2f, pushableMask);
-		bool diagUp = Physics.Raycast(transform.position, toTopCorner, toTopCorner.magnitude * 1.2f, pushableMask);
-		bool diagDown = Physics.Raycast(transform.position, toBottomCorner, toBottomCorner.magnitude, pushableMask);
-
+		bool left = Physics2D.Raycast(pos, Vector2.left, xExtent * 1.5f, allExceptSpiderAndRockMask);
+		bool diagUp = Physics2D.Raycast(pos, toTopCorner, toTopCorner.magnitude, allExceptSpiderAndRockMask);
+		bool diagDown = Physics2D.Raycast(pos, toBottomCorner, toBottomCorner.magnitude, allExceptSpiderAndRockMask);
 		return left || diagUp || diagDown;
 	}
 
@@ -123,5 +124,5 @@ public class SpiderMovement : MonoBehaviour {
 			hips[i].localRotation = Quaternion.Euler(hips[i].localRotation.eulerAngles.x, rot, hips[i].localRotation.eulerAngles.z);
 		}
 	}
-
 }
+
