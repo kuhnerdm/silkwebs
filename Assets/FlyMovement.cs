@@ -18,15 +18,12 @@ public class FlyMovement : MonoBehaviour {
 	void Update () {
 		if (!fleeing)
         {
-            if (seesSpider()) //TODO spider is within sightRadius
+            if (seesSpider()) 
                 fleeing = true;
         }
         else
         {
-            Vector3 direction = transform.position - spider.transform.position;
-            direction.Normalize();
             transform.position = Vector3.MoveTowards(transform.position, spider.transform.position, -speed * Time.deltaTime);
-            //TODO get angle at which spider approaches, then fly away at that angle.
         }
 	}
 

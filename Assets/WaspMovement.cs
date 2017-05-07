@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class WaspMovement : MonoBehaviour {
-    private float patrolSpeed;
-    private float attackSpeed;
+    private float patrolSpeed = .02f;
+    private float attackSpeed = 2f;
     private bool attacking = false;
-    private float sightRadius;
+    private float sightRadius = 3f;
     private float direction = -1f;
-    private float patrolLength;
+    private float patrolLength = 3f;
     private float notyetpatrolledLength;
     private GameObject spider;
 
@@ -24,14 +24,13 @@ public class WaspMovement : MonoBehaviour {
         if (!attacking)
         {
             Vector3 pos = transform.position;
-            pos.x += direction * (patrolSpeed + Time.deltaTime);
-            if (notyetpatrolledLength <= 0) //TODO check for patrolLength has been reached
+            if (notyetpatrolledLength <= 0)
             {
                 direction = -direction;
-                pos.x = -pos.x;
                 notyetpatrolledLength = patrolLength;
             }
-            notyetpatrolledLength -= direction * (patrolSpeed + Time.deltaTime);
+            pos.x += direction * (patrolSpeed + Time.deltaTime);
+            notyetpatrolledLength -= patrolSpeed + Time.deltaTime;
             transform.position = pos;
 
             if (seesSpider())
@@ -39,8 +38,7 @@ public class WaspMovement : MonoBehaviour {
         }
         else
         {
-
-            //TODO attack spider
+            transform.position = Vector3.MoveTowards(transform.position, spider.transform.position, attackSpeed * Time.deltaTime);
         }
         
     }
@@ -48,6 +46,13 @@ public class WaspMovement : MonoBehaviour {
     private bool seesSpider()
     {
         float distance = Vector3.Distance(transform.position, spider.transform.position);
-        return distance <= 5f;
+        return distance <= sightRadius;
+    }
+
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        GameObject collwith = coll.gameObject;
+        if (collwith.tag == "Spider")
+            Debug.Log("Wasp hits Spider.", this);
     }
 }
