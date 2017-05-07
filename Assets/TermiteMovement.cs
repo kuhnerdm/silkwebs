@@ -16,11 +16,12 @@ public class TermiteMovement : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        //this.GetComponent<BoxCollider2D>().size.x / 2;
+        
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
         Vector3 pos = transform.position;
         if (collidewithPlatform()) 
         {
@@ -61,10 +62,10 @@ public class TermiteMovement : MonoBehaviour {
         return left || diagUp || diagDown;
     }
 
-    void OnCollisionEnter(Collision coll)
+    void OnCollisionEnter2D(Collision2D coll)
     {
         GameObject collwith = coll.gameObject;
         if (collwith.tag == "Spider")
-            print("Termite hits Spider.");
+            Debug.Log("Termite hits Spider.", this);
     }
 }
