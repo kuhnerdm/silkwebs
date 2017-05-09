@@ -463,7 +463,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   offset: 0
   _____________: 0
-  poi: {fileID: 0}
+  poi: {fileID: 1564514698}
   camZ: 0
 --- !u!1001 &1564514697
 Prefab:
@@ -519,6 +519,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 25c91045c4725f048a23b28a5dcc47d0, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1564514698 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1732995390475762, guid: 25c91045c4725f048a23b28a5dcc47d0,
+    type: 2}
+  m_PrefabInternal: {fileID: 1564514697}
 --- !u!1 &1802611008
 GameObject:
   m_ObjectHideFlags: 0
