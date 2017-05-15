@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,14 +22,19 @@ public class LevelTransition : MonoBehaviour {
         if (collwith.tag == "Spider")
             if (SceneManager.GetActiveScene().buildIndex + 1 < SceneManager.sceneCountInBuildSettings)
             {
-                Debug.Log("Termite hits Spider.", this);
+                Debug.Log("Level end", this);
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1, LoadSceneMode.Single);
             }
             else
             {
-                Debug.Log("Fly hits Spider.", this);
+                Debug.Log("Level end, resetting.", this);
                 SceneManager.LoadScene(0, LoadSceneMode.Single);
             }
+        else
+	{
+		Debug.Log("thing was not a spider", this);
+		// do something?
+	}
             
     }
 }
