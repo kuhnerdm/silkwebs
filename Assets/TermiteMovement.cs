@@ -26,6 +26,10 @@ public class TermiteMovement : MonoBehaviour {
         if (collidewithPlatform()) 
         {
             direction = -direction;
+
+            Vector2 oldRot = this.transform.rotation.eulerAngles;
+            Vector2 newRot = new Vector2(oldRot.x, oldRot.y + 180);
+            this.transform.rotation = Quaternion.Euler(newRot);
         }
         pos.x += direction * (speed + Time.deltaTime);
         transform.position = pos;

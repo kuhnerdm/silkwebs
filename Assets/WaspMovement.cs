@@ -28,6 +28,10 @@ public class WaspMovement : MonoBehaviour {
             {
                 direction = -direction;
                 notyetpatrolledLength = patrolLength;
+
+                Vector2 oldRot = this.transform.rotation.eulerAngles;
+                Vector2 newRot = new Vector2(oldRot.x, oldRot.y + 180);
+                this.transform.rotation = Quaternion.Euler(newRot);
             }
             pos.x += direction * (patrolSpeed + Time.deltaTime);
             notyetpatrolledLength -= patrolSpeed + Time.deltaTime;
@@ -39,7 +43,18 @@ public class WaspMovement : MonoBehaviour {
         else
         {
             transform.position = Vector3.MoveTowards(transform.position, spider.transform.position, attackSpeed * Time.deltaTime);
+
+            if (transform.position.x - spider.transform.position.x >= 0)
+            {
+                this.transform.rotation = Quaternion.Euler(new Vector2(0f, 0f));
+            }
+            else
+            {
+                this.transform.rotation = Quaternion.Euler(new Vector2(0f, 180f));
+            }
         }
+
+        
         
     }
 
