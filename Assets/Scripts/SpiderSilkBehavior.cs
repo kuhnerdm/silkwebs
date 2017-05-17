@@ -23,10 +23,22 @@ public class SpiderSilkBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.U) && attachedThread == null)
+        if (Input.GetKeyDown(KeyCode.U) && attachedThread == null && (FacingLeft || FacingRight))
         {
             GameObject player = transform.gameObject;  // The script should be placed on the spider.
-            Vector2 spiderAimDirection = player.transform.rotation * (FacingRight ? Vector2.right : Vector2.left);
+            Vector2 spiderAimDirection;
+            if (FacingLeft)
+            {
+                spiderAimDirection = player.transform.rotation * Vector2.left;
+            }
+            else if (FacingRight)
+            {
+                spiderAimDirection = player.transform.rotation * Vector2.right;
+            }
+            else
+            {
+                throw new System.Exception();
+            }
 
             // Check if there is an object to attach silk to.
             // (Distance of 1 in raycast was picked arbitrarily but seems to work for now.)
@@ -50,14 +62,24 @@ public class SpiderSilkBehavior : MonoBehaviour
     }
 
     /// <summary>
-    /// True if the spider is facing right. False if the spider is facing left.
+    /// True if the spider is facing right.
     /// </summary>
     bool FacingRight
     {
         get
         {
-            return true;
-            //return GetComponent<SimpleSpiderMovement>().facingRight;
+            return transform.rotation.y < 45.0f;
+        }
+    }
+
+    /// <summary>
+    /// True if the spider is facing left.
+    /// </summary>
+    bool FacingLeft
+    {
+        get
+        {
+            return transform.rotation.y > 135.0f;
         }
     }
 }
