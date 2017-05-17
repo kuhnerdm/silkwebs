@@ -9,6 +9,8 @@ public class SpiderMovement : MonoBehaviour {
 	public float easing;
 	public float epsilon;
 
+	private AudioSource walkSound;
+
 	private float xExtent = 0.8f;
 	private float yExtent = 0.5f;
 
@@ -22,6 +24,7 @@ public class SpiderMovement : MonoBehaviour {
 	private int allExceptSpiderMask = ~(2 << 8);
 
 	void Start() {
+		walkSound = transform.GetChild(1).GetComponent<AudioSource>();
 		Transform leftHips = transform.GetChild(0).GetChild(0).GetChild(0);
 		Transform rightHips = transform.GetChild(0).GetChild(0).GetChild(1);
 		hips = new Transform[8];
@@ -45,6 +48,9 @@ public class SpiderMovement : MonoBehaviour {
 
 			this.transform.rotation = Quaternion.Euler(newRot);
 			rotateLegs();
+			if(!walkSound.isPlaying) {
+				walkSound.Play();
+			}
 		}
 
 		if(Input.GetKey(KeyCode.LeftArrow) && !objectToLeft() && !Input.GetKey(KeyCode.RightArrow)) { // just left
@@ -58,6 +64,9 @@ public class SpiderMovement : MonoBehaviour {
 			this.transform.rotation = Quaternion.Euler(newRot);
 
 			rotateLegs();
+			if(!walkSound.isPlaying) {
+				walkSound.Play();
+			}
 		}
 
 
@@ -65,12 +74,14 @@ public class SpiderMovement : MonoBehaviour {
 			Vector2 oldVel = GetComponent<Rigidbody2D>().velocity;
 			Vector2 newVel = new Vector2(oldVel.x, jumpVel);
 			GetComponent<Rigidbody2D>().velocity = newVel;
+			walkSound.Stop();
 		}
 
 		if((Input.GetKey(KeyCode.RightArrow) && Input.GetKey(KeyCode.LeftArrow)) || (!Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))) { // either both or neither
 			Vector2 oldVel = GetComponent<Rigidbody2D>().velocity;
 			Vector2 newVel = new Vector2(Mathf.Lerp(oldVel.x, 0, easing), oldVel.y);
 			GetComponent<Rigidbody2D>().velocity = newVel;
+			walkSound.Stop();
 		}
 
 	}
