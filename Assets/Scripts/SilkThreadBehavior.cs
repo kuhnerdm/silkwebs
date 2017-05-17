@@ -72,6 +72,11 @@ public class SilkThreadBehavior : MonoBehaviour {
         lastNode.GetComponent<HingeJoint2D>().connectedBody = spider.GetComponent<Rigidbody2D>();
     }
 
+    public void Detach()
+    {
+        LastNode.GetComponent<HingeJoint2D>().connectedBody = null;
+    }
+
     #endregion
 
     #region Public properties

@@ -55,13 +55,18 @@ public class SpiderSilkBehavior : MonoBehaviour
                 attachedThread.GetComponent<SilkThreadBehavior>().InitialAttach(Player, hitObject, destination);
             }
         }
+        else if (Input.GetKeyDown(KeyCode.U) && attachedThread != null)
+        {
+            SilkThreadBehavior behavior = attachedThread.GetComponent<SilkThreadBehavior>();
+            behavior.Detach();
+            attachedThread = null;
+        }
     }
 
     void FixedUpdate()
     {
         if (attachedThread == null) return;
 
-        SilkThreadBehavior behavior = attachedThread.GetComponent<SilkThreadBehavior>();
 
         // If the spider is moving and 'U' is pressed then fix the position of the last thread node and create new
         // threads as necessary to keep the end of the thread close to the spider.
