@@ -20,8 +20,7 @@ public class LevelTransition : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        
-        Debug.Log("I update?" + isFade, this);
+       
         if (isFade)
         {
             if (alpha >= 1f)
@@ -30,7 +29,6 @@ public class LevelTransition : MonoBehaviour {
             }
             else
             {
-                Debug.Log("alpha " + alpha, this);
                 alpha += transRate * (alpha + transRate);
                 if (alpha > 1f)
                 {
