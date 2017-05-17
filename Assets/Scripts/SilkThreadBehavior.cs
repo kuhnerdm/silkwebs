@@ -15,6 +15,9 @@ public class SilkThreadBehavior : MonoBehaviour {
     /// </summary>
     public List<GameObject> threadNodes;
 
+    [HideInInspector]
+    private GameObject attachmentPoint;
+
     #region Unity methods
 
     /// Use this for initialization
@@ -34,12 +37,15 @@ public class SilkThreadBehavior : MonoBehaviour {
     /// <summary>
     /// Perform the initial attachment of the silk between the spider and some attachment point.
     /// </summary>
-    public void InitialAttach(GameObject spider, GameObject attachmentPoint)
+    public void InitialAttach(GameObject spider, GameObject objectAttachmentPoint)
     {
+        attachmentPoint = objectAttachmentPoint;
+
         // Create the first node at the attachment point. Link the attachment point to the first node.
         GameObject firstNode = Instantiate(silkNodePrefab, attachmentPoint.transform.position, Quaternion.identity) as GameObject;
         firstNode.transform.parent = ThisThread.transform;
-        attachmentPoint.GetComponent<HingeJoint2D>().connectedBody = firstNode.GetComponent<Rigidbody2D>();
+        threadNodes.Add(firstNode);
+        attachmentPoint.GetComponent<FixedJoint2D>().connectedBody = firstNode.GetComponent<Rigidbody2D>();
 
         Vector2 attachmentToSpider = spider.transform.position - attachmentPoint.transform.position;
         float attachmentToSpiderDist = attachmentToSpider.magnitude;
@@ -56,6 +62,7 @@ public class SilkThreadBehavior : MonoBehaviour {
             Vector2 nextNodePos = (Vector2)attachmentPoint.transform.position + toNextPos;
             nextNode = Instantiate(silkNodePrefab, nextNodePos, Quaternion.identity) as GameObject;
             nextNode.transform.parent = ThisThread.transform;
+            threadNodes.Add(nextNode);
             prevNode.GetComponent<HingeJoint2D>().connectedBody = nextNode.GetComponent<Rigidbody2D>();
             prevNode = nextNode;
         }
@@ -74,6 +81,16 @@ public class SilkThreadBehavior : MonoBehaviour {
 
     #endregion
 
+    #region Public properties
+
+    /// <summary>
+    /// The silk node at the back end of the thread, the end of the thread that is extended by <see cref="Extend"/> and
+    /// that is initially attached to the spider
+    /// </summary>
+    public GameObject LastNode { get { return threadNodes[threadNodes.Count - 1]; } }
+
+    #endregion
+
     #region Private properties
 
     /// <summary>
@@ -82,16 +99,36 @@ public class SilkThreadBehavior : MonoBehaviour {
     private GameObject ThisThread { get { return transform.gameObject; } }
 
     /// <summary>
-    /// The silk node at the front end of the thread (the end that is extended by <see cref="Extend"/>)
+    /// The silk node at the front end of the thread, the end that is not extended by <see cref="Extend"/>
     /// </summary>
     private GameObject FirstNode { get { return threadNodes[0]; } }
 
-    /// <summary>
-    /// The silk node at the back end of the thread (the end of the thread that is not extended by <see cref="Extend"/>) 
-    /// </summary>
-    private GameObject LastNode { get { return threadNodes[threadNodes.Count - 1]; } }
-
     private LineRenderer LineRenderer { get { return GetComponent<LineRenderer>(); } }
+
+    #endregion
+
+    #region Public method
+
+    public void MakeLastNodeFixed()
+    {
+        LastNode.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+        LastNode.GetComponent<HingeJoint2D>().connectedBody = null;
+    }
+
+    public void MakeLastNodeMobile()
+    {
+        LastNode.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+        if (threadNodes.Count > 1)
+        {
+            LastNode.GetComponent<HingeJoint2D>().connectedBody = 
+                threadNodes[threadNodes.Count-2].GetComponent<Rigidbody2D>();
+        }
+        else
+        {
+            LastNode.GetComponent<HingeJoint2D>().connectedBody =
+                attachmentPoint.GetComponent<Rigidbody2D>();
+        }
+    }
 
     #endregion
 

@@ -3033,7 +3033,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 5
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -3275,9 +3275,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 302f13d59420e0040a8a2f0260bfb595, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hookPrefab: {fileID: 1854193450035430, guid: 813c7c9fed32b434398f0edbed303754, type: 2}
   silkAttachmentPointPrefab: {fileID: 1583501438010704, guid: e94e7e759dea7bd42a039c7cc3c8b579,
     type: 2}
+  silkThreadPrefab: {fileID: 1411421543956314, guid: 7cce112b20925c245916db9c967c48f1,
+    type: 2}
+  attachedThread: {fileID: 0}
 --- !u!135 &135009425007802998
 SphereCollider:
   m_ObjectHideFlags: 1

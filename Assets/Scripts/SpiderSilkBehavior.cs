@@ -25,15 +25,14 @@ public class SpiderSilkBehavior : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.U) && attachedThread == null && (FacingLeft || FacingRight))
         {
-            GameObject player = transform.gameObject;  // The script should be placed on the spider.
             Vector2 spiderAimDirection;
             if (FacingLeft)
             {
-                spiderAimDirection = player.transform.rotation * Vector2.left;
+                spiderAimDirection = Player.transform.rotation * Vector2.left;
             }
             else if (FacingRight)
             {
-                spiderAimDirection = player.transform.rotation * Vector2.right;
+                spiderAimDirection = Player.transform.rotation * Vector2.right;
             }
             else
             {
@@ -43,7 +42,7 @@ public class SpiderSilkBehavior : MonoBehaviour
             // Check if there is an object to attach silk to.
             // (Distance of 1 in raycast was picked arbitrarily but seems to work for now.)
             GetComponent<Collider2D>().enabled = false;
-            RaycastHit2D hit = Physics2D.Raycast(player.transform.position, spiderAimDirection, 4);
+            RaycastHit2D hit = Physics2D.Raycast(Player.transform.position, spiderAimDirection, 4);
             GetComponent<Collider2D>().enabled = true;
 
             if (hit.collider != null)
@@ -55,9 +54,38 @@ public class SpiderSilkBehavior : MonoBehaviour
                 attachmentPoint.transform.parent = hit.transform;
 
                 // Instatiate an empty silk thread.
-                GameObject attachedSilk = Instantiate(silkThreadPrefab, destination, Quaternion.identity) as GameObject;
-                attachedSilk.GetComponent<SilkThreadBehavior>().InitialAttach(player, attachmentPoint);
+                attachedThread = Instantiate(silkThreadPrefab, destination, Quaternion.identity) as GameObject;
+                attachedThread.GetComponent<SilkThreadBehavior>().InitialAttach(Player, attachmentPoint);
             }
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if (attachedThread == null) return;
+
+        SilkThreadBehavior behavior = attachedThread.GetComponent<SilkThreadBehavior>();
+
+        // If the spider is moving and 'U' is pressed then fix the position of the last thread node and create new
+        // threads as necessary to keep the end of the thread close to the spider.
+        if (Player.GetComponent<Rigidbody2D>().velocity.magnitude > 0.0f)
+        {
+            //behavior.MakeLastNodeFixed();
+        }
+        else
+        {
+            //behavior.MakeLastNodeMobile();
+        }
+    }
+
+    /// <summary>
+    /// The spider game object to which the script is attached.
+    /// </summary>
+    GameObject Player
+    {
+        get
+        {
+            return transform.gameObject;
         }
     }
 
