@@ -16,7 +16,7 @@ public class SilkThreadBehavior : MonoBehaviour {
     public List<GameObject> threadNodes;
 
     [HideInInspector]
-    private GameObject attachmentPoint;
+    GameObject attachedObject;
 
     #region Unity methods
 
@@ -37,17 +37,18 @@ public class SilkThreadBehavior : MonoBehaviour {
     /// <summary>
     /// Perform the initial attachment of the silk between the spider and some attachment point.
     /// </summary>
-    public void InitialAttach(GameObject spider, GameObject objectAttachmentPoint)
+    public void InitialAttach(GameObject spider, GameObject attachToObject, Vector2 attachmentPoint)
     {
-        attachmentPoint = objectAttachmentPoint;
+        attachedObject = attachToObject;
 
         // Create the first node at the attachment point. Link the attachment point to the first node.
-        GameObject firstNode = Instantiate(silkNodePrefab, attachmentPoint.transform.position, Quaternion.identity) as GameObject;
+        GameObject firstNode = Instantiate(silkNodePrefab, attachmentPoint, Quaternion.identity) as GameObject;
         firstNode.transform.parent = ThisThread.transform;
         threadNodes.Add(firstNode);
-        attachmentPoint.GetComponent<FixedJoint2D>().connectedBody = firstNode.GetComponent<Rigidbody2D>();
+        attachedObject.GetComponent<FixedJoint2D>().enabled = true;
+        attachedObject.GetComponent<FixedJoint2D>().connectedBody = firstNode.GetComponent<Rigidbody2D>();
 
-        Vector2 attachmentToSpider = spider.transform.position - attachmentPoint.transform.position;
+        Vector2 attachmentToSpider = (Vector2)spider.transform.position - attachmentPoint;
         float attachmentToSpiderDist = attachmentToSpider.magnitude;
         attachmentToSpider.Normalize();
 
@@ -59,7 +60,7 @@ public class SilkThreadBehavior : MonoBehaviour {
              attachmentToNextDist += nodeDistance)
         {
             Vector2 toNextPos = attachmentToSpider * attachmentToNextDist;
-            Vector2 nextNodePos = (Vector2)attachmentPoint.transform.position + toNextPos;
+            Vector2 nextNodePos = attachmentPoint + toNextPos;
             nextNode = Instantiate(silkNodePrefab, nextNodePos, Quaternion.identity) as GameObject;
             nextNode.transform.parent = ThisThread.transform;
             threadNodes.Add(nextNode);
@@ -126,7 +127,7 @@ public class SilkThreadBehavior : MonoBehaviour {
         else
         {
             LastNode.GetComponent<HingeJoint2D>().connectedBody =
-                attachmentPoint.GetComponent<Rigidbody2D>();
+                attachedObject.GetComponent<Rigidbody2D>();
         }
     }
 

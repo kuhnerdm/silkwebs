@@ -47,15 +47,12 @@ public class SpiderSilkBehavior : MonoBehaviour
 
             if (hit.collider != null)
             {
+                GameObject hitObject = hit.transform.gameObject;
                 Vector2 destination = hit.point;
-
-                // Instatiate an attachment point on the object. (This is what the hook will grab on to.)
-                GameObject attachmentPoint = Instantiate(silkAttachmentPointPrefab, destination, Quaternion.identity) as GameObject;
-                attachmentPoint.transform.parent = hit.transform;
 
                 // Instatiate an empty silk thread.
                 attachedThread = Instantiate(silkThreadPrefab, destination, Quaternion.identity) as GameObject;
-                attachedThread.GetComponent<SilkThreadBehavior>().InitialAttach(Player, attachmentPoint);
+                attachedThread.GetComponent<SilkThreadBehavior>().InitialAttach(Player, hitObject, destination);
             }
         }
     }
