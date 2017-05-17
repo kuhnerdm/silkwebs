@@ -662,6 +662,7 @@ GameObject:
   - component: {fileID: 114584667152821938}
   - component: {fileID: 50658916418830260}
   - component: {fileID: 61599676074117242}
+  - component: {fileID: 114981670620970558}
   m_Layer: 9
   m_Name: Spider
   m_TagString: Spider
@@ -3373,6 +3374,22 @@ MonoBehaviour:
   easing: 0.2
   epsilon: 0.05
   resetTime: 0.5
+--- !u!114 &114981670620970558
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1732995390475762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e20eed98b81e9c4ab5853bcf755cf82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  silkAttachmentPointPrefab: {fileID: 1583501438010704, guid: 8c5872ddfb4c9604a857e67d7e0e3384,
+    type: 2}
+  silkThreadPrefab: {fileID: 1411421543956314, guid: ea20f21b1baf03744b4be4821520dd75,
+    type: 2}
+  attachedThread: {fileID: 0}
 --- !u!135 &135009425007802998
 SphereCollider:
   m_ObjectHideFlags: 1
