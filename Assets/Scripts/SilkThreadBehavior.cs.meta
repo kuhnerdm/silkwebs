@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 81a658ff67fe44347bda8d42f90cfc40
+timeCreated: 1495054702
+licenseType: Pro
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - silkNodePrefab: {fileID: 1224995859415704, guid: ff51872eb2d0d314f9fa5ddcfd55b204,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

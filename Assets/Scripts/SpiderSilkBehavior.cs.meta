@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 8e20eed98b81e9c4ab5853bcf755cf82
+timeCreated: 1495054927
+licenseType: Pro
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - silkAttachmentPointPrefab: {fileID: 1583501438010704, guid: 8c5872ddfb4c9604a857e67d7e0e3384,
+      type: 2}
+  - silkThreadPrefab: {fileID: 1411421543956314, guid: ea20f21b1baf03744b4be4821520dd75,
+      type: 2}
+  - attachedThread: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
