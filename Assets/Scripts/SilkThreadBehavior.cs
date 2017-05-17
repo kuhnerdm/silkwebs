@@ -72,23 +72,10 @@ public class SilkThreadBehavior : MonoBehaviour {
         lastNode.GetComponent<HingeJoint2D>().connectedBody = spider.GetComponent<Rigidbody2D>();
     }
 
-    /// <summary>
-    /// Extend the silk thread by adding new nodes to the front.
-    /// </summary>
-    public void Extend()
-    {
-        throw new System.NotImplementedException();
-    }
-
     #endregion
 
     #region Public properties
 
-    /// <summary>
-    /// The silk node at the back end of the thread, the end of the thread that is extended by <see cref="Extend"/> and
-    /// that is initially attached to the spider
-    /// </summary>
-    public GameObject LastNode { get { return threadNodes[threadNodes.Count - 1]; } }
 
     #endregion
 
@@ -103,6 +90,12 @@ public class SilkThreadBehavior : MonoBehaviour {
     /// The silk node at the front end of the thread, the end that is not extended by <see cref="Extend"/>
     /// </summary>
     private GameObject FirstNode { get { return threadNodes[0]; } }
+
+    /// <summary>
+    /// The silk node at the back end of the thread, the end of the thread that is extended by <see cref="Extend"/> and
+    /// that is initially attached to the spider
+    /// </summary>
+    private GameObject LastNode { get { return threadNodes[threadNodes.Count - 1]; } }
 
     private LineRenderer LineRenderer { get { return GetComponent<LineRenderer>(); } }
 

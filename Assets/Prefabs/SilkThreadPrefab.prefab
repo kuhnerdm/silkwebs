@@ -54,7 +54,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   silkNodePrefab: {fileID: 1224995859415704, guid: aff743a925b45eb4d8e41e4ff33faa5f,
     type: 2}
-  nodeDistance: 0.5
+  nodeDistance: 0.01
   threadNodes: []
 --- !u!120 &120288150662392754
 LineRenderer:
@@ -92,7 +92,7 @@ LineRenderer:
   - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 2
-    widthMultiplier: 0.01
+    widthMultiplier: 0.05
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -108,7 +108,7 @@ LineRenderer:
     colorGradient:
       key0:
         serializedVersion: 2
-        rgba: 4279762688
+        rgba: 4292861919
       key1:
         serializedVersion: 2
         rgba: 4294967295
