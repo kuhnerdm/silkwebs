@@ -25,7 +25,8 @@ public class FollowCam : MonoBehaviour {
 		if (poi == null) return;
 
 		Vector3 destination = poi.transform.position;
-		destination.z = camZ + offset;
+		destination.z = camZ;
+        destination.y = destination.y + offset;
 		transform.position = destination;
 	}
 }
