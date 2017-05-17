@@ -22,7 +22,6 @@ public class SilkThreadBehavior : MonoBehaviour {
 
     /// Use this for initialization
     void Start () {
-        threadNodes = new List<GameObject>();
     }
 
     /// Update is called once per frame
@@ -40,6 +39,7 @@ public class SilkThreadBehavior : MonoBehaviour {
     public void InitialAttach(GameObject spider, GameObject attachToObject, Vector2 attachmentPoint)
     {
         attachedObject = attachToObject;
+        threadNodes = new List<GameObject>();
 
         // Create the first node at the attachment point. Link the attachment point to the first node.
         GameObject firstNode = Instantiate(silkNodePrefab, attachmentPoint, Quaternion.identity) as GameObject;
